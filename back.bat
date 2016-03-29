@@ -6,7 +6,15 @@ echo  start %time% >> %date%.txt
 IF not exist %myDIR%%computername% (mkdir "%myDIR%%computername%")
 echo on
 rdiff-backup.exe --exclude "**\AppData" --exclude "**NTUSER.DAT" --exclude "**ntuser.dat.*" "%UserProfile%" "%myDIR%%computername%"
-rdiff-backup.exe "%AppData%\Mozilla\Firefox\Profiles" "%myDIR%%computername%\appdata"
+IF exist %AppData%\Mozilla\Firefox (
+rdiff-backup.exe "%AppData%\Mozilla\Firefox" "%myDIR%%computername%\appdata"
+)
+IF exist %AppData%\Thunderbird (
+rdiff-backup.exe "%AppData%\Thunderbird" "%myDIR%%computername%\appdata"
+)
+IF exist %AppData%\Microsoft\Outlook (
+rdiff-backup.exe "%AppData%\Microsoft\Outlook" "%myDIR%%computername%\appdata"
+)
 echo off
 set koniec=%time%
 echo  koniec %time% >> %date%.txt
